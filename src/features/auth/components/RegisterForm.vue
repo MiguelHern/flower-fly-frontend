@@ -1,6 +1,6 @@
 <script setup>
-
 import router from '@/router/index.js'
+import ButtonBase from '@/components/ui/ButtonBase.vue'
 </script>
 
 <template>
@@ -9,50 +9,46 @@ import router from '@/router/index.js'
     <!-- Nombre y Apellido en la misma fila -->
     <div class="mb-4 flex gap-4">
       <div class="flex-1">
-        <label for="nombre" class="block text-gray-600">Nombre</label>
-        <input type="text" id="nombre" name="nombre"
-          class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
-          autocomplete="off">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" id="nombre" name="nombre" class="form-input" autocomplete="off">
       </div>
       <div class="flex-1">
-        <label for="apellido" class="block text-gray-600">Apellido</label>
-        <input type="text" id="apellido" name="apellido"
-          class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
-          autocomplete="off">
+        <label for="apellido" class="form-label">Apellido</label>
+        <input type="text" id="apellido" name="apellido" class="form-input" autocomplete="off">
       </div>
     </div>
     <!-- Correo Electrónico -->
     <div class="mb-4">
-      <label for="email" class="block text-gray-600">Correo Electrónico</label>
-      <input type="email" id="email" name="email"
-        class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
-        autocomplete="off">
+      <label for="email" class="form-label">Correo Electrónico</label>
+      <input type="email" id="email" name="email" class="form-input" autocomplete="off">
     </div>
     <!-- Contraseña -->
     <div class="mb-4">
-      <label for="password" class="block text-gray-600">Contraseña</label>
-      <input type="password" id="password" name="password"
-        class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
-        autocomplete="off">
+      <label for="password" class="form-label">Contraseña</label>
+      <input type="password" id="password" name="password" class="form-input" autocomplete="off">
     </div>
     <!-- Confirmar Contraseña -->
     <div class="mb-6">
-      <label for="confirmPassword" class="block text-gray-600">Confirmar Contraseña</label>
-      <input type="password" id="confirmPassword" name="confirmPassword"
-        class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
-        autocomplete="off">
+      <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" autocomplete="off">
     </div>
     <!-- Botón de Registro -->
-    <button type="submit"
-      class="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full">Registrarse</button>
+    <ButtonBase
+      type="submit"
+      class="bg-black hover:bg-black/80 text-white font-semibold rounded-md py-2 px-4 w-full"
+    >
+      Login
+    </ButtonBase>
   </form>
   <!-- Enlace para Iniciar Sesión -->
   <div class="mt-6 text-center">
-    <span>¿Ya tienes cuenta? </span>
-    <button @click="router.push({ name: 'login' })" class="hover:underline text-blue-500">
-       Inicia sesión
+    <span class="text-gray-500">¿Ya tienes cuenta? </span>
+    <button @click="router.push({ name: 'login' })" class="text-gray-900 dark:text-white hover:underline">
+      Inicia sesión
     </button>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>
