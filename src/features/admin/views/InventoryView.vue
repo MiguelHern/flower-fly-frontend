@@ -1,0 +1,30 @@
+<script setup>
+
+</script>
+
+<template>
+  <div class="overflow-x-auto mb-5 style_scroll">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
+      <tr>
+        <th scope="col" class="py-3 px-4">Nombre</th>
+        <th scope="col" class="py-3 px-4">Tipo</th>
+        <th scope="col" class="py-3 px-4">Precio</th>
+        <th scope="col" class="py-3 px-4">Descripción</th>
+        <th scope="col" class="py-3 px-4">Stock</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- Aquí irán las filas de productos -->
+      <tr>
+        <td colspan="5" class="py-4 text-center text-gray-400">Esperando datos...</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+
+<style scoped>
+
+</style>
