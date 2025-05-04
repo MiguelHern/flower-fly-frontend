@@ -37,7 +37,7 @@ const categories = [
 <template>
   <div>
     <section class="container mx-auto py-16">
-      <h2 class="text-3xl font-light text-center mb-12">Categorías</h2>
+      <h2 class="text-3xl font-bold  text-center mb-12">Categorías</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <CardCategories v-for="category in categories" :key="category.id" :title="category.title"
           :description="category.description" :imageUrl="category.imageUrl" :link="category.link" />

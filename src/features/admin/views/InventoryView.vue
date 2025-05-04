@@ -1,39 +1,11 @@
 <script setup>
-import { ref } from 'vue'
-import {
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  DialogDescription,
-} from '@headlessui/vue'
-import InventoryForm from '@/features/admin/components/InventoryForm.vue'
-
-const isOpen = ref(false)
-
-function setIsOpen(value) {
-  isOpen.value = value
-}
 
 </script>
 
 <template>
-  <div class="overflow-x-auto mb-5 style_scroll">
-    <Dialog :open="isOpen" @close="setIsOpen">
-      <DialogPanel>
-        <DialogTitle>Deactivate account</DialogTitle>
-        <DialogDescription>
-          This will permanently deactivate your account
-        </DialogDescription>
+  <div class="overflow-x-auto mb-5 style_scroll mt-25">
 
-        <p>
-          <InventoryForm/>
-        </p>
 
-        <button @click="setIsOpen(false)">Deactivate</button>
-        <button @click="setIsOpen(false)">Cancel</button>
-      </DialogPanel>
-    </Dialog>
-    <button @click="setIsOpen(true)">Deactivate</button>
 
     <table class="w-full text-sm text-left rtl:text-right text-gray-500">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">

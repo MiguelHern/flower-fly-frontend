@@ -1,10 +1,17 @@
 <script setup>
 import router from '@/router/index.js'
 import ButtonBase from '@/components/ui/ButtonBase.vue'
+import { Flower2 } from 'lucide-vue-next'
 </script>
 
 <template>
-  <h1 class="text-2xl font-semibold mb-4">Registrate</h1>
+  <div class="mb-7">
+    <div class="flex items-center justify-center mb-2">
+      <Flower2 class="h-10 w-10 text-pink-500" />
+    </div>
+    <h1 class="text-3xl text-center font-bold text-pink-700">Florería Flower Fly</h1>
+    <h3 class="text-center text-gray-500">Registrate para realizar pedidos</h3>
+  </div>
   <form action="#" method="POST">
     <!-- Nombre y Apellido en la misma fila -->
     <div class="mb-4 flex gap-4">
@@ -37,11 +44,11 @@ import ButtonBase from '@/components/ui/ButtonBase.vue'
       type="submit"
       class="bg-black hover:bg-black/80 text-white font-semibold rounded-md py-2 px-4 w-full"
     >
-      Login
+      Registrate
     </ButtonBase>
   </form>
   <!-- Enlace para Iniciar Sesión -->
-  <div class="mt-6 text-center">
+  <div class="mt-6 text-center text-sm">
     <span class="text-gray-500">¿Ya tienes cuenta? </span>
     <button @click="router.push({ name: 'login' })" class="text-gray-900 dark:text-white hover:underline">
       Inicia sesión

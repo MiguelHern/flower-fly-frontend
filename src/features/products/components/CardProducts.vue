@@ -35,7 +35,7 @@ defineProps({
 </script>
 
 <template>
-  <RouterLink :to="link"  class="group bg-stone-100 rounded-4xl overflow-hidden p-4 cursor-default">
+  <RouterLink :to="link"  class="group card-lg overflow-hidden p-8 cursor-default">
     <div class="overflow-hidden mb-4">
       <img :src="imageUrl" :alt="title"
         class="object-cover w-full aspect-[4/4] transition-transform duration-500 group-hover:scale-105" />

@@ -112,7 +112,7 @@ onMounted(() => {
         </div>
 
         <div class="pt-4 space-y-4">
-          <Button class="w-full bg-black hover:bg-black/80 text-white" variant="destructive">Agregar al carrito</Button>
+          <Button class="w-full " >Agregar al carrito</Button>
         </div>
 
         <div class="text-sm text-muted-foreground">
