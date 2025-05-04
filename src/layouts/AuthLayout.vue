@@ -1,5 +1,4 @@
 <script setup>
-import { Flower2 } from 'lucide-vue-next';
 </script>
 
 <template>
