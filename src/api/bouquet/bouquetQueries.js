@@ -1,0 +1,80 @@
+import axios from 'axios'
+import { apiUrl, autorization } from '@/api/headers.js'
+
+export const bouquetQueries = {
+  getFlowers: async (options = {}) => {
+    try {
+      const defaultOptions = {
+        page: 1,
+        pageSize: 10,
+        colors: []
+      };
+
+      const queryOptions = { ...defaultOptions, ...options };
+
+      let url = `${apiUrl}/Flower?page=${queryOptions.page}`;
+
+      if (queryOptions.colors && queryOptions.colors.length > 0) {
+        queryOptions.colors.forEach(color => {
+          url += `&colors=${color}`;
+        });
+      }
+
+      if (queryOptions.pageSize) {
+        url += `&pageSize=${queryOptions.pageSize}`;
+      }
+
+      if (queryOptions.seasons && queryOptions.seasons.length > 0) {
+        queryOptions.seasons.forEach(season => {
+          url += `&seasons=${season}`;
+        });
+      }
+
+      if (queryOptions.types && queryOptions.types.length > 0) {
+        queryOptions.types.forEach(type => {
+          url += `&types=${type}`;
+        });
+      }
+
+      const response = await axios.get(url, autorization());
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching flowers:', error);
+      throw error;
+    }
+  },
+
+  getFlowerById: async (flowerId) => {
+    try {
+      const response = await axios.get(`${apiUrl}/Flower/${flowerId}`, autorization());
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching flower with ID ${flowerId}:`, error);
+      throw error;
+    }
+  },
+
+  getBouquets: async (options = {}) => {
+    try {
+      const defaultOptions = {
+        page: 1,
+        pageSize: 10,
+        colors: []
+      };
+
+      const queryOptions = { ...defaultOptions, ...options };
+
+      let url = `${apiUrl}/Bouquet/Customized?page=${queryOptions.page}`;
+
+      if (queryOptions.pageSize) {
+        url += `&pageSize=${queryOptions.pageSize}`;
+      }
+
+      const response = await axios.get(url, autorization());
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching bouquets:', error);
+      throw error;
+    }
+  },
+}
