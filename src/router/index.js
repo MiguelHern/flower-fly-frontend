@@ -5,6 +5,7 @@ import UserLayout from '@/layouts/UserLayout.vue'
 import AdminLayout from '@/layouts/AdminLayout.vue'
 import InventoryView from '@/features/admin/views/InventoryView.vue'
 import SettingsView from '@/features/admin/views/SettingsView.vue'
+import { userQueries } from '@/api/user/userQueries.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,13 +14,13 @@ const router = createRouter({
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: NotFound,
-      // meta: { requiresAuth: false }
+      meta: { requiresAuth: false }
     },
     {
       path: '/',
       name: 'auth',
       component: AuthLayout,
-      // meta: { verifyToken: false }
+      meta: { verifyToken: false},
       redirect: { name: 'login' },
       children: [
         {
@@ -63,6 +64,11 @@ const router = createRouter({
           component: () => import('../features/bouquets/views/CustomBouquetView.vue'),
         },
         {
+          path: '/bouquets',
+          name: 'bouquets',
+          component: () => import('../features/bouquets/views/BouquetsHome.vue'),
+        },
+        {
           path: '/cart',
           name: 'cart',
           component: () => import('../features/cart/views/CartView.vue'),
@@ -73,16 +79,19 @@ const router = createRouter({
       path: '/',
       name: 'admin',
       component: AdminLayout,
+      meta: { requiresRole: 'ADMIN' },
       children: [
         {
           path: '/inventory',
           name: 'inventory',
           component: InventoryView,
+          meta: { requiresRole: 'ADMIN' }
         },
         {
           path: '/settings',
           name: 'settings',
           component: SettingsView,
+          meta: { requiresRole: 'ADMIN' }
         }
       ],
     },
@@ -99,57 +108,36 @@ const router = createRouter({
 
 export default router
 
-// router.beforeEach(async (to, from, next) => {
-//   //AfterEach --NOTA--
-//   /* Verificamos si existe el id para el interrogatorio */
-//   if (to.meta.idExistente) {
-//
-//     const response = await pacientesQueries.getDatosPaciente(to.params.id)
-//
-//     if (response == null) {
-//       return next({ name: 'NotFound' })
-//     } else if(response.verificado === true){
-//       return next({ name: 'NotFound' })
-//     }else{
-//       return next()
-//     }
-//   }
-//
-//   /* Verifica que el token sea autentico */
-//   if (to.meta.verifyToken) {
-//     if (localStorage.getItem(import.meta.env.VITE_CREDENCIALES) === '') {
-//       localStorage.removeItem(import.meta.env.VITE_CREDENCIALES)
-//       localStorage.removeItem(import.meta.env.VITE_USUARIO)
-//       next('/')
-//     }
-//
-//     const response = await usuariosQueries.verifyUser(localStorage.getItem(import.meta.env.VITE_CREDENCIALES))
-//     if (response.verify === false) {
-//       localStorage.removeItem(import.meta.env.VITE_CREDENCIALES)
-//       localStorage.removeItem(import.meta.env.VITE_USUARIO)
-//       next('/')
-//     } else {
-//       next()
-//     }
-//   }
-//
-//   /*
-//    * Redireccion a la ruta "/"
-//    * Si tengo acceso no me permitira ver el login
-//    * */
-//   if (to.name === 'login') {
-//     if (localStorage.getItem(import.meta.env.VITE_CREDENCIALES) != null) {
-//       next({ name: 'Dashboard' })
-//     }
-//   }
-//
-//   /* Cambia el titulo dependiendo de la pagina */
-//   if (to.meta.title) {
-//     document.title = to.meta.title
-//   } else {
-//     document.title = 'Fisiolabs' // Título por defecto
-//   }
-//
-//
-//   return next()
-// })
+router.beforeEach(async (to, from, next) => {
+  const token = localStorage.getItem(import.meta.env.VITE_CREDENCIALES)
+  const rol = localStorage.getItem(import.meta.env.VITE_ROL)
+
+  // Redirige si necesita token y no hay
+  if (to.meta.verifyToken) {
+    if (!token) {
+      localStorage.clear()
+      return next({ name: 'login' })
+    }
+
+    const response = await userQueries.verifyUser(token)
+    if (!response.verify) {
+      localStorage.clear()
+      return next({ name: 'login' })
+    }
+  }
+
+  // Bloquea rutas de admin si no es admin
+  if (to.meta.requiresRole && to.meta.requiresRole !== rol) {
+    return next({ name: 'not-found' }) // o a otra página de error
+  }
+
+  // Evita que usuario autenticado entre a login
+  if (to.name === 'login' && token) {
+    return next({ name: 'products' })
+  }
+
+  // Cambiar el título
+  document.title = to.meta.title || 'Fisiolabs'
+
+  return next()
+})

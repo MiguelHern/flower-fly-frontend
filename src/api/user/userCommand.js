@@ -1,9 +1,9 @@
+import { jwtDecode } from 'jwt-decode'
 import { apiUrl, sinAutorizationJSON } from '@/api/headers.js'
 import axios from 'axios'
-import { irInicio } from '@/router/Utils.js'
+import { logInAdmin, logInUser } from '@/router/Utils.js'
 
 export const usuarioCommand = {
-  /*Login*/
   login: async (email, password) => {
     try {
       const JSON = {
@@ -14,21 +14,26 @@ export const usuarioCommand = {
       const [data, config] = sinAutorizationJSON(JSON)
       const response = await axios.post(apiUrl + '/User/Login', data, config)
 
-      //Se agrega la credencial al localStorage
-      localStorage.setItem(import.meta.env.VITE_CREDENCIALES, response.data.accessToken)
+      const token = response.data.accessToken
+      localStorage.setItem(import.meta.env.VITE_CREDENCIALES, token)
 
-      //Te redirecciona al Dashboard
-      irInicio()
+      const decoded = jwtDecode(token)
+      const rol = decoded.role
 
-      //El return solo es para saber si, si se ejecuto correctamente
+      if (rol === 'ADMIN') {
+        logInAdmin()
+      } else {
+        logInUser()
+      }
+      localStorage.setItem(import.meta.env.VITE_ROL, rol)
+
       return null
     } catch (error) {
       if (error.response.status === 400) {
-          return error.response.data.title
+        return error.response.data.title
       } else if (error.response.status === 404) {
         return 'Nombre de usuario y/o contraseña incorrectos'
       }
     }
-  },
-
+  }
 }

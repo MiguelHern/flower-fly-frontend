@@ -1,7 +1,9 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-import {  ShoppingCart, Heart, User } from 'lucide-vue-next'
+import {  ShoppingCart, Heart, User, PowerOff } from 'lucide-vue-next'
+import Button from '@/components/ui/ButtonBase.vue'
+import { logOut } from '@/router/Utils.js'
 </script>
 
 <template>
@@ -43,6 +45,17 @@ import {  ShoppingCart, Heart, User } from 'lucide-vue-next'
               <span class="flex-1 whitespace-nowrap">Carrito</span>
             </RouterLink>
           </li>
+          <li>
+            <Button
+              @click="logOut()"
+              data-tooltip-target="Sesion"
+              variant="outline"
+              to="/cart"
+              class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            >
+              <span class="flex-1 whitespace-nowrap">Cerrar sesión</span>
+            </Button>
+          </li>
         </ul>
       </div>
     </nav>
@@ -59,7 +72,12 @@ import {  ShoppingCart, Heart, User } from 'lucide-vue-next'
               >Inicio</RouterLink>
             </li>
             <li>
-              <a href="#" class="text-gray-900 dark:text-white hover:underline">Ramos</a>
+              <RouterLink
+                :to="{ name: 'bouquets' }"
+                class="text-gray-900 dark:text-white hover:underline"
+              >
+                <span class="flex-1 whitespace-nowrap">Ramo</span>
+              </RouterLink>
             </li>
             <li>
               <RouterLink
