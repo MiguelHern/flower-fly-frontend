@@ -54,11 +54,11 @@ export const bouquetQueries = {
     }
   },
 
-  deleteFlowers: async (cartId) => {
+  deleteFlowers: async (flowerId) => {
     try {
       const config = authorization()
 
-      await axios.delete(`${apiUrl}/Flower/${cartId}`, config)
+      await axios.delete(`${apiUrl}/Flower/${flowerId}`, config)
 
       return null
     } catch (error) {
@@ -96,5 +96,27 @@ export const bouquetQueries = {
     }
   },
 
+  getBouquetsNoCustomized: async (options = {}) => {
+    try {
+      const defaultOptions = {
+        page: 1,
+        pageSize: 10
+      };
+
+      const queryOptions = { ...defaultOptions, ...options };
+
+      let url = `${apiUrl}/Bouquet?page=${queryOptions.page}`;
+
+      if (queryOptions.pageSize) {
+        url += `&pageSize=${queryOptions.pageSize}`;
+      }
+
+      const response = await axios.get(url, authorization());
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching bouquets:', error);
+      throw error;
+    }
+  },
 
 }

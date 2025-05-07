@@ -8,67 +8,65 @@
         <!-- Flowers grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div
-            v-for="item in selectedItems"
-            :key="item.id"
-            class="relative group bg-white rounded-xl overflow-hidden shadow-sm transition-all duration-300 hover:shadow-md border border-pink-100"
-          >
-            <img
-              v-if="item.image"
-              :src="item.image"
-              :alt="item.name"
-              width="400"
-              height="300"
-              class="object-cover w-full aspect-[4/3] transition-transform duration-500 group-hover:scale-105"
-            />
+  v-for="item in selectedItems"
+  :key="item.id"
+  class="h-full flex flex-col relative group bg-white rounded-xl overflow-hidden shadow-sm transition-all duration-300 hover:shadow-md border border-pink-100"
+>
+  <img
+    v-if="item.image"
+    :src="item.image"
+    :alt="item.name"
+    width="400"
+    height="300"
+    class="object-cover w-full aspect-[4/3] transition-transform duration-500 group-hover:scale-105"
+  />
 
-            <div class="p-5">
-              <div class="flex justify-between items-center mb-3">
-                <h3 class="font-serif text-xl text-gray-800">{{ item.name }}</h3>
-                <div class="text-pink-600 text-sm font-medium">
-                  {{ '$' + item.price.toFixed(2) }}
-                </div>
-              </div>
+  <div class="p-5 flex flex-col grow">
+    <div class="flex justify-between items-center mb-3">
+      <h3 class="font-serif text-xl text-gray-800">{{ item.name }}</h3>
+      <div class="text-pink-600 text-sm font-medium">
+        {{ '$' + item.price.toFixed(2) }}
+      </div>
+    </div>
 
-              <div class="flex items-center justify-between pt-3 border-t border-gray-100">
-                <span class="text-gray-600 text-sm">Cantidad</span>
-                <div class="flex items-center space-x-4">
-                  <button
-                    class="h-8 w-8 bg-white hover:bg-pink-50 border border-gray-200 rounded-md flex items-center justify-center transition-all duration-200"
-                    @click="updateItemQuantity(item.id, getItemQuantity(item.id) - 1)"
-                    :disabled="getItemQuantity(item.id) === 0"
-                    :class="{ 'opacity-50 cursor-not-allowed': getItemQuantity(item.id) === 0 }"
-                  >
-                    <Minus class="h-3 w-3 text-gray-600" />
-                  </button>
-                  <span class="w-6 text-center font-medium text-gray-800">{{
-                    getItemQuantity(item.id)
-                  }}</span>
-                  <button
-                    class="h-8 w-8 bg-white hover:bg-pink-50 border border-gray-200 rounded-md flex items-center justify-center transition-all duration-200"
-                    @click="updateItemQuantity(item.id, getItemQuantity(item.id) + 1)"
+    <div class="flex items-center justify-between pt-3 border-t border-gray-100 mt-auto py-4">
+      <span class="text-gray-600 text-sm">Cantidad</span>
+      <div class="flex items-center space-x-4">
+        <button
+          class="h-8 w-8 bg-white hover:bg-pink-50 border border-gray-200 rounded-md flex items-center justify-center transition-all duration-200"
+          @click="updateItemQuantity(item.id, getItemQuantity(item.id) - 1)"
+          :disabled="getItemQuantity(item.id) === 0"
+          :class="{ 'opacity-50 cursor-not-allowed': getItemQuantity(item.id) === 0 }"
+        >
+          <Minus class="h-3 w-3 text-gray-600" />
+        </button>
+        <span class="w-6 text-center font-medium text-gray-800">
+          {{ getItemQuantity(item.id) }}
+        </span>
+        <button
+          class="h-8 w-8 bg-white hover:bg-pink-50 border border-gray-200 rounded-md flex items-center justify-center transition-all duration-200"
+          @click="updateItemQuantity(item.id, getItemQuantity(item.id) + 1)"
+          :disabled="getItemQuantity(item.id) >= item.stock"
+          :class="{ 'opacity-50 cursor-not-allowed': getItemQuantity(item.id) >= item.stock }"
+        >
+          <Plus class="h-3 w-3 text-gray-600" />
+        </button>
+      </div>
+    </div>
 
-                    :disabled="getItemQuantity(item.id) >= item.stock"
-                    :class="{
-                      'opacity-50 cursor-not-allowed': getItemQuantity(item.id) >= item.stock,
-                    }"
-                  >
-                    <Plus class="h-3 w-3 text-gray-600" />
-                  </button>
-                </div>
-              </div>
+    <ButtonBase
+      class="w-full  py-2 rounded-md font-medium transition-colors duration-200 flex items-center justify-center gap-2 border border-rose-500"
+      @click="removeSelectedItem(item.id)"
+      variant=""
+      :disabled="getItemQuantity(item.id) === 0"
+      :class="{ 'opacity-50 cursor-not-allowed': getItemQuantity(item.id) === 0 }"
+    >
+      <ShoppingBag class="h-4 w-4" />
+      Eliminar del carrito
+    </ButtonBase>
+  </div>
+</div>
 
-              <ButtonBase
-                class="w-full mt-4 py-2 rounded-md font-medium transition-colors duration-200 flex items-center justify-center gap-2 border border-rose-500"
-                @click="removeSelectedItem(item.id)"
-                variant=""
-                :disabled="getItemQuantity(item.id) === 0"
-                :class="{ 'opacity-50 cursor-not-allowed': getItemQuantity(item.id) === 0 }"
-              >
-                <ShoppingBag class="h-4 w-4" />
-                Eliminar del carrito
-              </ButtonBase>
-            </div>
-          </div>
         </div>
 
         <div v-if="selectedItems.length === 0" class="bg-gray-50 p-8 rounded-lg text-center">

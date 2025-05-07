@@ -5,20 +5,20 @@
 
       <form @submit.prevent="handleSubmit" class="space-y-6">
         <div>
-          <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
+          <label for="name" class="form-label">Nombre</label>
           <input
             id="name"
             v-model="form.name"
             type="text"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            class="form-input"
             :class="{ 'border-red-500': errors.name }"
           />
           <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
         </div>
 
         <div>
-          <label for="price" class="block text-sm font-medium text-gray-700">Precio</label>
-          <div class="mt-1 relative rounded-md shadow-sm">
+          <label for="price" class="form-label">Precio</label>
+          <div class="relative rounded-md shadow-sm">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <span class="text-gray-500 sm:text-sm">$</span>
             </div>
@@ -27,7 +27,7 @@
               v-model="form.price"
               type="number"
               step="0.01"
-              class="pl-7 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              class="form-input pl-7"
               :class="{ 'border-red-500': errors.price }"
             />
           </div>
@@ -35,25 +35,24 @@
         </div>
 
         <div>
-          <label for="stock" class="block text-sm font-medium text-gray-700">Stock</label>
+          <label for="stock" class="form-label">Stock</label>
           <input
             id="stock"
             v-model="form.stock"
             type="number"
             min="0"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            class="form-input"
             :class="{ 'border-red-500': errors.stock }"
           />
           <p v-if="errors.stock" class="mt-1 text-sm text-red-600">{{ errors.stock }}</p>
         </div>
 
-        <!-- Tipo -->
         <div>
-          <label for="type" class="block text-sm font-medium text-gray-700">Tipo</label>
+          <label for="type" class="form-label">Tipo</label>
           <select
             id="type"
             v-model="form.type"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            class="form-input"
             :class="{ 'border-red-500': errors.type }"
           >
             <option value="" disabled>Seleccione un tipo</option>
@@ -62,13 +61,12 @@
           <p v-if="errors.type" class="mt-1 text-sm text-red-600">{{ errors.type }}</p>
         </div>
 
-        <!-- Color -->
         <div>
-          <label for="color" class="block text-sm font-medium text-gray-700">Color</label>
+          <label for="color" class="form-label">Color</label>
           <select
             id="color"
             v-model="form.color"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            class="form-input"
             :class="{ 'border-red-500': errors.color }"
           >
             <option value="" disabled>Seleccione un color</option>
@@ -77,9 +75,8 @@
           <p v-if="errors.color" class="mt-1 text-sm text-red-600">{{ errors.color }}</p>
         </div>
 
-        <!-- Temporada -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Temporadas</label>
+          <label class="form-label mb-1">Temporadas</label>
           <div class="flex flex-wrap gap-4">
             <div v-for="season in seasons" :key="season.id" class="flex items-center">
               <input
@@ -87,27 +84,22 @@
                 :id="season.label"
                 :value="season.id"
                 v-model="form.season"
-                class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                class="form-input h-4 w-4"
               />
-              <label :for="season.label" class="ml-2 text-sm text-gray-700">{{ season.label }}</label>
+              <label :for="season.label" class="form-label ml-2 text-sm">{{ season.label }}</label>
             </div>
-
           </div>
           <p v-if="errors.season" class="mt-1 text-sm text-red-600">{{ errors.season }}</p>
         </div>
 
-        <!-- Imagen -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Imagen</label>
-          <div class="mt-1 flex items-center">
-            <div
-              v-if="imagePreview"
-              class="relative flex-shrink-0 mr-4"
-            >
+        <div class="w-full">
+          <label class="form-label">Imagen</label>
+          <div class="mt-1 flex items-center justify-center flex-col">
+            <div v-if="imagePreview" class="relative flex-shrink-0 mr-4">
               <img
                 :src="imagePreview"
                 alt="Previsualización"
-                class="h-24 w-24 object-cover rounded-md"
+                class="h-32 w-32 object-cover rounded-md"
               />
               <button
                 type="button"
@@ -135,7 +127,6 @@
           <p v-if="errors.image" class="mt-1 text-sm text-red-600">{{ errors.image }}</p>
         </div>
 
-        <!-- Botones -->
         <div class="flex justify-end space-x-3 pt-4">
           <button
             type="button"
@@ -149,14 +140,15 @@
             class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             :disabled="isSubmitting"
           >
-            <span v-if="isSubmitting" class="flex items-center">
-              <LoaderIcon class="animate-spin -ml-1 mr-2 h-4 w-4" />
-              Guardando...
-            </span>
+      <span v-if="isSubmitting" class="flex items-center">
+        <LoaderIcon class="animate-spin -ml-1 mr-2 h-4 w-4" />
+        Guardando...
+      </span>
             <span v-else>Guardar</span>
           </button>
         </div>
       </form>
+
     </div>
   </ModalUi>
   <ToastMessage v-if="toastValue" type="success">
@@ -202,7 +194,7 @@ const showToast = (message, type = 'info') => {
 }
 
 const flowerTypes = ['Rosa', 'Tulipán', 'Girasol', 'Lirio', 'Margarita', 'Clavel', 'Orquídea', 'Dalia']
-const flowerColors = ['Rojo', 'Blanco', 'Amarillo', 'Rosa', 'Naranja', 'Púrpura', 'Azul', 'Multicolor']
+const flowerColors = ['Amarillo', 'Rosa','Rojo', 'Blanco', ]
 const seasons = [
   { id: 1, label: 'Primavera' },
   { id: 2, label: 'Verano' },

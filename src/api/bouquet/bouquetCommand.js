@@ -21,7 +21,7 @@ export const bouquetCommand = {
       const [data, config] = authorizationFormData(formData)
 
       const response = await axios.post(apiUrl + '/Bouquet', data, config)
-
+      console.log(response.data)
       return response.data
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -31,7 +31,7 @@ export const bouquetCommand = {
       }
     }
   },
-  createFlower: async (name, price, imageFile, type, color, season, stock) => {
+  createFlower: async (name, price,imageFile,type,color,season, stock) => {
     try {
       const formData = new FormData()
       formData.append('name', name)
@@ -39,13 +39,13 @@ export const bouquetCommand = {
       formData.append('image', imageFile)
       formData.append('type', type)
       formData.append('color', color)
-      season.forEach(s => formData.append('season', s))
+      formData.append('season', season)
       formData.append('stock', stock)
-
       const [data, config] = authorizationFormData(formData)
       const response = await axios.post(apiUrl + '/Flower', data, config)
       return response.data
-    } catch (error) {
+    }
+    catch (error) {
       if (error.response && error.response.status === 400) {
         return error.response.data.title
       }

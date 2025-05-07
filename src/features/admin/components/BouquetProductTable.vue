@@ -3,6 +3,9 @@ import { ref, onMounted, computed } from 'vue'
 import { bouquetQueries } from '@/api/bouquet/bouquetQueries'
 import { Search, ChevronLeft, ChevronRight, Loader2, EyeIcon } from 'lucide-vue-next'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import FlowerForm from '@/features/admin/components/FlowerForm.vue'
+import Button from '@/components/ui/ButtonBase.vue'
+import BouquetForm from '@/features/admin/components/BouquetForm.vue'
 
 const bouquets = ref([])
 const loading = ref(true)
@@ -26,7 +29,7 @@ const fetchBouquets = async () => {
   error.value = null
 
   try {
-    const response = await bouquetQueries.getBouquets({
+    const response = await bouquetQueries.getBouquetsNoCustomized({
       page: currentPage.value,
       pageSize: pageSize.value
     })
@@ -115,12 +118,27 @@ const emit = defineEmits(['view-bouquet'])
 onMounted(() => {
   fetchBouquets()
 })
+
+const showCrearFlor = ref(false)
+
+function handleFlorCreada() {
+  showCrearFlor.value = false
+  fetchBouquets()
+}
 </script>
 
 <template>
   <div class="p-4">
-    <h2 class="text-xl font-semibold mb-4">Catálogo de Ramos</h2>
-
+    <div class="flex justify-between">
+      <h2 class="text-xl font-semibold mb-4">Catálogo de Flores</h2>
+      <Button @click="showCrearFlor = true"> Agregar producto </Button>
+    </div>
+    <BouquetForm
+      v-if="showCrearFlor"
+      :model-value="showCrearFlor"
+      @close="showCrearFlor = false"
+      @submitted="handleFlorCreada"
+    />
     <!-- Filtros y búsqueda -->
     <div class="mb-6 flex flex-wrap gap-4">
       <div class="relative flex-1 min-w-64">
@@ -202,7 +220,7 @@ onMounted(() => {
         <template v-else>
           <tr v-for="bouquet in filteredBouquets" :key="bouquet.id" class="bg-white border-b hover:bg-gray-50">
             <td class="py-3 px-4 font-medium text-gray-900">{{ bouquet.name }}</td>
-            <td class="py-3 px-4">€{{ bouquet.price?.toFixed(2) || '0.00' }}</td>
+            <td class="py-3 px-4">${{ bouquet.price?.toFixed(2) || '0.00' }}</td>
             <td class="py-3 px-4">
               <div class="max-w-xs truncate">{{ bouquet.description || 'Sin descripción' }}</div>
             </td>

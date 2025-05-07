@@ -5,6 +5,7 @@ import { Search, ChevronLeft, ChevronRight, Loader2, Pencil, Trash } from 'lucid
 import { Menu, MenuButton, MenuItems } from '@headlessui/vue'
 import Button from '@/components/ui/ButtonBase.vue'
 import FlowerForm from '@/features/admin/components/FlowerForm.vue'
+import ToastMessage from '@/components/ui/ToastMessage.vue'
 
 const flowers = ref([])
 const loading = ref(true)
@@ -79,6 +80,30 @@ const resetFilters = () => {
   fetchFlowers()
 }
 
+const showNotifications = ref(false)
+
+const messages = ref('')
+const toastType = ref('')
+const deleteFlower = async (flowerId) => {
+  const response = await bouquetQueries.deleteFlowers(flowerId)
+  showNotifications.value = true
+
+  if (response !== null) {
+    toastType.value = 'error'
+    messages.value = response
+  } else {
+    toastType.value = 'success'
+    await fetchFlowers()
+    messages.value = 'success'
+  }
+
+  setTimeout(() => {
+    showNotifications.value = false
+    messages.value = ''
+  }, 3000)
+}
+
+
 onMounted(() => {
   fetchFlowers()
 })
@@ -89,6 +114,8 @@ function handleFlorCreada() {
   showCrearFlor.value = false
   fetchFlowers()
 }
+
+
 </script>
 
 <template>
@@ -247,8 +274,9 @@ function handleFlorCreada() {
             <th scope="col" class="py-3 px-4">Nombre</th>
             <th scope="col" class="py-3 px-4">Tipo</th>
             <th scope="col" class="py-3 px-4">Precio</th>
-            <th scope="col" class="py-3 px-4">Descripción</th>
             <th scope="col" class="py-3 px-4">Stock</th>
+            <th scope="col" class="py-3 px-4">Imagen</th>
+            <th scope="col" class="py-3 px-4">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -281,9 +309,6 @@ function handleFlorCreada() {
               <td class="py-3 px-4">{{ flower.type }}</td>
               <td class="py-3 px-4">${{ flower.price?.toFixed(2) || '0.00' }}</td>
               <td class="py-3 px-4">
-                <div class="max-w-xs truncate">{{ flower.description || 'Sin descripción' }}</div>
-              </td>
-              <td class="py-3 px-4">
                 <span
                   :class="[
                     'px-2 py-1 text-xs font-medium rounded-full',
@@ -298,13 +323,16 @@ function handleFlorCreada() {
                 </span>
               </td>
               <td class="py-3 px-4">
+                <img class="h-12 w-12" :src="flower.image" alt="">
+              </td>
+              <td class="py-3 px-4 space-x-4">
+                <div
+                  @click="() => deleteFlower(flower.id)"
+                  class="rounded-full border inline-block p-1">
+                  <Trash size="16" />
+                </div>
                 <div class="rounded-full border inline-block p-1">
                   <Pencil size="16" />
-                </div>
-              </td>
-              <td class="py-3 px-4">
-                <div class="rounded-full border inline-block p-1">
-                  <Trash size="16" />
                 </div>
               </td>
             </tr>
@@ -340,6 +368,10 @@ function handleFlorCreada() {
       </div>
     </div>
   </div>
+  <ToastMessage :type="toastType" v-if="showNotifications">
+    <span>{{ messages }}</span>
+  </ToastMessage>
+
 </template>
 
 <style scoped>
