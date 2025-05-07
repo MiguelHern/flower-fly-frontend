@@ -8,13 +8,13 @@
     <div class="w-full grid grid-cols-1 lg:grid-cols-4 gap-8">
       <!-- Componente de flores (ocupa 3/4 en pantallas grandes) -->
       <div class="lg:col-span-3">
-        <FlowersBouquet />
+        <Items />
       </div>
 
       <!-- Componente de resumen (ocupa 1/4 en pantallas grandes y se mantiene fijo al hacer scroll) -->
       <div class="lg:col-span-1">
         <div class="sticky top-8">
-          <SummaryBouquet />
+          <Summary />
         </div>
       </div>
     </div>
@@ -23,8 +23,8 @@
 
 <script setup>
 import { onMounted } from 'vue';
-import FlowersBouquet from '@/features/bouquets/components/FlowersBouquet.vue';
-import SummaryBouquet from '@/features/bouquets/components/SummaryBouquet.vue';
+import Items from '@/features/cart/components/CartItems.vue';
+import Summary from '@/features/cart/components/CartSummary.vue'
 
 onMounted(() => {
   // Puedes realizar inicializaciones adicionales aquí si es necesario

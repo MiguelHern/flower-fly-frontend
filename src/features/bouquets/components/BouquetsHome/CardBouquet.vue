@@ -10,7 +10,7 @@
       class="object-cover w-full aspect-[4/3] transition-transform duration-500 group-hover:scale-105"
     />
 
-    <div class="p-5">
+    <div class="p-5 h-full flex flex-col justify-between">
       <div class="flex justify-between items-center mb-3">
         <h3 class="font-serif text-xl text-gray-800">{{ name }}</h3>
         <div class="text-pink-600 text-sm font-medium">
@@ -34,10 +34,12 @@
           </div>
         </div>
       </div>
-
+      <ToastMessage type="success" v-if="savingItems">
+        <span>{{ name }} Agregado al carrito</span>
+      </ToastMessage>
       <Button
-        @click="() => add(id,1)"
-        class="w-full mt-4 py-2 rounded-md font-medium transition-colors duration-200 flex items-center justify-center gap-2 border border-pink-200"
+        @click="() => addToCart(props)"
+        class="w-full mt-4 py-2 rounded-md font-medium transition-colors duration-200 flex items-center justify-center gap-2 border border-pink-200 mt-0"
         variant="outline"
       >
         <ShoppingBag class="h-4 w-4" />
@@ -52,25 +54,27 @@
 import { ShoppingBag } from 'lucide-vue-next'
 import Button from '@/components/ui/ButtonBase.vue'
 import { ref } from 'vue'
-
-import { cartCommand } from '@/api/cart/cartCommand.js'
 import Spinner from '@/components/ui/SpinnerUi.vue'
+import { useCartStore } from '@/features/cart/stores/cartStore.js'
+import ToastMessage from '@/components/ui/ToastMessage.vue'
 
 
 let spinner = ref(false)
-let alertError = ref(false)
-let messageError = ref("")
 
-const add = async  (bouquetId, quantity) =>{
-  spinner.value = true
-  let response = await cartCommand.add(bouquetId, quantity)
-
-  if(response !== null){
-    alertError.value = true
-    messageError.value = response
-  }
-
-  spinner.value = false
+const cartStore = useCartStore()
+let savingItems = ref(false)
+const addToCart = (item) => {
+  savingItems.value = true
+  cartStore.addSelectedItem({
+    id: item.id,
+    name: item.name,
+    price: item.price,
+    image: item.image,
+    bouquet: item.bouquet,
+  })
+  setTimeout(() => {
+    savingItems.value = false
+  }, 3000)
 }
 
 const props = defineProps({

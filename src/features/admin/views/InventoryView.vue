@@ -2,11 +2,7 @@
   <div class="container mx-auto p-4">
     <!-- Encabezado -->
     <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold text-gray-800">Floristería Bella Flora</h1>
-      <button class="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-        <ShoppingBag class="w-5 h-5 mr-2" />
-        <span>Mi carrito</span>
-      </button>
+      <h1 class="text-2xl font-bold text-gray-800">Inventario</h1>
     </div>
 
     <!-- Pestañas -->
@@ -18,7 +14,7 @@
             'px-4 py-2 border-b-2 font-medium text-sm flex items-center transition',
             activeTab === 'flowers'
               ? 'border-blue-500 text-blue-600'
-              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
           ]"
         >
           <Flower class="w-5 h-5 mr-2" />
@@ -30,7 +26,7 @@
             'px-4 py-2 border-b-2 font-medium text-sm flex items-center transition',
             activeTab === 'bouquets'
               ? 'border-blue-500 text-blue-600'
-              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
           ]"
         >
           <Gift class="w-5 h-5 mr-2" />
@@ -44,6 +40,7 @@
       <FlowerTable v-if="activeTab === 'flowers'" />
       <BouquetTable v-else @view-bouquet="handleViewBouquet" />
     </div>
+    <FlowerForm />
   </div>
 </template>
 
@@ -52,6 +49,7 @@ import { ref } from 'vue'
 import FlowerTable from '../components/FlowerProductTable.vue'
 import BouquetTable from '../components/BouquetProductTable.vue'
 import { Flower, Gift, ShoppingBag } from 'lucide-vue-next'
+import FlowerForm from '@/features/admin/components/FlowerForm.vue'
 
 const activeTab = ref('flowers')
 

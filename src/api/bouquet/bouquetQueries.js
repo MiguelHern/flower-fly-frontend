@@ -54,6 +54,24 @@ export const bouquetQueries = {
     }
   },
 
+  deleteFlowers: async (cartId) => {
+    try {
+      const config = authorization()
+
+      await axios.delete(`${apiUrl}/Flower/${cartId}`, config)
+
+      return null
+    } catch (error) {
+      if (error.response?.status === 400) {
+        return error.response.data.title
+      } else if (error.response?.status === 404) {
+        return 'Corrige perro'
+      } else {
+        return 'Error inesperado'
+      }
+    }
+  },
+
   getBouquets: async (options = {}) => {
     try {
       const defaultOptions = {
@@ -77,4 +95,6 @@ export const bouquetQueries = {
       throw error;
     }
   },
+
+
 }

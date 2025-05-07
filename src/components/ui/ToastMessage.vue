@@ -47,7 +47,7 @@ const typeClasses = computed(() => {
 <template>
   <div
     :class="[
-      'fixed bottom-6 right-6 p-4 rounded-md shadow-md flex items-center gap-3 animate-fadeIn bg-white text-gray-800 border border-pink-100 animate-fadeIn',
+      'fixed bottom-6 right-6 p-4 rounded-md flex items-center gap-3 animate-fadeIn bg-white text-gray-800 border border-pink-200 animate-fadeIn z-10',
       {
         'h-9 px-4 py-2': size === 'default',
         'h-7 rounded-md px-3': size === 'sm',

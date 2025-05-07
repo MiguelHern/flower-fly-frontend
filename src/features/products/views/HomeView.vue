@@ -36,6 +36,7 @@ const categories = [
 
 <template>
   <div>
+    <CardCustomBouquet />
     <section class="container mx-auto py-16">
       <h2 class="text-3xl font-bold  text-center mb-12">Categorías</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -43,7 +44,7 @@ const categories = [
           :description="category.description" :imageUrl="category.imageUrl" :link="category.link" />
       </div>
     </section>
-    <CardCustomBouquet />
+
   </div>
 </template>
 
