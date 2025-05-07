@@ -1,4 +1,4 @@
-import { apiUrl, autorizationFormData } from '@/api/headers.js'
+import { apiUrl, authorizationFormData } from '@/api/headers.js'
 import axios from 'axios'
 
 export const bouquetCommand = {
@@ -18,7 +18,7 @@ export const bouquetCommand = {
 
       formData.append('image', imageFile)
 
-      const [data, config] = autorizationFormData(formData)
+      const [data, config] = authorizationFormData(formData)
 
       const response = await axios.post(apiUrl + '/Bouquet', data, config)
 
@@ -28,6 +28,46 @@ export const bouquetCommand = {
         return error.response.data.title
       } else {
         return 'Error al crear el bouquet'
+      }
+    }
+  },
+  createFlower: async (name, price,imageFile,type,color,season, stock) => {
+    try {
+      const formData = new FormData()
+      formData.append('name', name)
+      formData.append('price', price)
+      formData.append('image', imageFile)
+      formData.append('type', type)
+      formData.append('color', color)
+      formData.append('season', season)
+      formData.append('stock', stock)
+      const [data, config] = authorizationFormData(formData)
+      const response = await axios.post(apiUrl + '/Flower', data, config)
+      return response.data
+    }
+    catch (error) {
+      if (error.response && error.response.status === 400) {
+        return error.response.data.title
+      }
+    }
+  },
+  editFlower: async (name, price,imageFile,type,color,season, stock) => {
+    try {
+      const formData = new FormData()
+      formData.append('name', name)
+      formData.append('price', price)
+      formData.append('image', imageFile)
+      formData.append('type', type)
+      formData.append('color', color)
+      formData.append('season', season)
+      formData.append('stock', stock)
+      const [data, config] = authorizationFormData(formData)
+      const response = await axios.patch(apiUrl + '/Flower', data, config)
+      return response.data
+    }
+    catch (error) {
+      if (error.response && error.response.status === 400) {
+        return error.response.data.title
       }
     }
   }

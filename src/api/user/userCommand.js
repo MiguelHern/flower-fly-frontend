@@ -1,5 +1,5 @@
 import { jwtDecode } from 'jwt-decode'
-import { apiUrl, sinAutorizationJSON } from '@/api/headers.js'
+import { apiUrl, withoutAuthorizationJSON } from '@/api/headers.js'
 import axios from 'axios'
 import { logInAdmin, logInUser } from '@/router/Utils.js'
 
@@ -11,7 +11,7 @@ export const usuarioCommand = {
         password: password
       }
 
-      const [data, config] = sinAutorizationJSON(JSON)
+      const [data, config] = withoutAuthorizationJSON(JSON)
       const response = await axios.post(apiUrl + '/User/Login', data, config)
 
       const token = response.data.accessToken

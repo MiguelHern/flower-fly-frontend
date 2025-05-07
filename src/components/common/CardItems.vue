@@ -3,11 +3,11 @@
     class="relative group bg-white rounded-xl overflow-hidden shadow-sm transition-all duration-300 hover:shadow-md border border-pink-100"
   >
     <img v-if="props.image"
-      :src="image"
-      :alt="name"
-      width="400"
-      height="300"
-      class="object-cover w-full aspect-[4/3] transition-transform duration-500 group-hover:scale-105"
+         :src="image"
+         :alt="name"
+         width="400"
+         height="300"
+         class="object-cover w-full aspect-[4/3] transition-transform duration-500 group-hover:scale-105"
     />
 
     <div class="p-5">

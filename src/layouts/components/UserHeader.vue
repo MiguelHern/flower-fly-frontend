@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-import {  ShoppingCart, Heart, User, PowerOff } from 'lucide-vue-next'
+import {  ShoppingCart, Heart, User } from 'lucide-vue-next'
 import Button from '@/components/ui/ButtonBase.vue'
 import { logOut } from '@/router/Utils.js'
 </script>

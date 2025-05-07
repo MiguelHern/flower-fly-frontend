@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { apiUrl, autorization } from '@/api/headers.js'
+import { apiUrl, authorization } from '@/api/headers.js'
 
 export const bouquetQueries = {
   getFlowers: async (options = {}) => {
@@ -36,7 +36,7 @@ export const bouquetQueries = {
         });
       }
 
-      const response = await axios.get(url, autorization());
+      const response = await axios.get(url, authorization());
       return response.data;
     } catch (error) {
       console.error('Error fetching flowers:', error);
@@ -46,7 +46,7 @@ export const bouquetQueries = {
 
   getFlowerById: async (flowerId) => {
     try {
-      const response = await axios.get(`${apiUrl}/Flower/${flowerId}`, autorization());
+      const response = await axios.get(`${apiUrl}/Flower/${flowerId}`, authorization());
       return response.data;
     } catch (error) {
       console.error(`Error fetching flower with ID ${flowerId}:`, error);
@@ -70,7 +70,7 @@ export const bouquetQueries = {
         url += `&pageSize=${queryOptions.pageSize}`;
       }
 
-      const response = await axios.get(url, autorization());
+      const response = await axios.get(url, authorization());
       return response.data;
     } catch (error) {
       console.error('Error fetching bouquets:', error);

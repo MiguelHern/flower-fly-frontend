@@ -1,6 +1,6 @@
 const apiUrl = import.meta.env.VITE_API_URL
 
-const sinAutorizationJSON = (data) => {
+const withoutAuthorizationJSON = (data) => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -10,7 +10,7 @@ const sinAutorizationJSON = (data) => {
   return [data, config]
 }
 
-const autorization = () => {
+const authorization = () => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ const autorization = () => {
   return config
 }
 
-const autorizationJSON = (data) => {
+const authorizationJSON = (data) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ const autorizationJSON = (data) => {
   return [data, config]
 }
 
-const autorizationFormData = (data) => {
+const authorizationFormData = (data) => {
   const config = {
     headers: {
       'Authorization': `Bearer ${localStorage.getItem(import.meta.env.VITE_CREDENCIALES)}`
@@ -42,4 +42,25 @@ const autorizationFormData = (data) => {
 }
 
 // Exporta las funciones de configuración para que puedan ser llamadas desde otros módulos
-export { autorization, autorizationJSON, sinAutorizationJSON, autorizationFormData, apiUrl }
+export { authorization, authorizationJSON, withoutAuthorizationJSON, authorizationFormData, apiUrl }
+
+
+/**
+ * withoutAuthorizationJSON(data):
+ *   - POST sin token, tipo JSON.
+ *   - return [data, config]
+ *
+ * authorization():
+ *   - GET/DELETE con token, sin body.
+ *   - return config
+ *
+ * authorizationJSON(data):
+ *   - POST/PUT con token y JSON.
+ *   - return [data, config]
+ *
+ * authorizationFormData(formData):
+ *   - POST con token y archivos (FormData).
+ *   - return [formData, config]
+ *
+ * 🔐 Token sacado de localStorage con VITE_CREDENCIALES
+ */
