@@ -69,7 +69,7 @@
 <!--            <div v-if="order.paymentMethod" class="flex items-start gap-3">-->
 <!--              <CreditCard class="h-5 w-5 text-gray-500 mt-0.5" />-->
 <!--              <div>-->
-<!--                <p class="font-medium">Método de pago</p>-->
+<!--                <p class="font-medium"> de pago</p>-->
 <!--                <p class="text-gray-600">{{ order.paymentMethod }}</p>-->
 <!--              </div>-->
 <!--            </div>-->
