@@ -55,8 +55,14 @@
           <ButtonBase class="w-full text-white bg-pink-600 hover:bg-pink-700">
             Ordenar
           </ButtonBase>
-          <!--<ButtonBase @click="createBouquet" class="" variant="outline"> Guardar ramo </ButtonBase>-->
+          <ButtonBase @click="showCrearFlor = true" class="" variant="secondary"> Agregar método de pago </ButtonBase>
         </div>
+        <PaymentForm
+          v-if="showCrearFlor"
+          :model-value="showCrearFlor"
+          @close="showCrearFlor = false"
+          @submitted="handleFlorCreada"
+        />
       </div>
 
       <!-- Promociones o información adicional -->
@@ -85,6 +91,14 @@ import ButtonBase from '@/components/ui/ButtonBase.vue'
 import { ShoppingBagIcon, XIcon, TruckIcon, CalendarIcon } from 'lucide-vue-next'
 import { useCartStore } from '@/features/cart/stores/cartStore.js'
 import ToastMessage from '@/components/ui/ToastMessage.vue'
+import BouquetForm from '@/features/admin/components/inventory/BouquetForm.vue'
+import PaymentForm from '@/features/sales/components/PaymentForm.vue'
+
+const showCrearFlor = ref(false)
+
+function handleFlorCreada() {
+  showCrearFlor.value = false
+}
 
 // Estado del componente
 const spinner = ref(false)

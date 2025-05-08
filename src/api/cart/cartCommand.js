@@ -33,7 +33,6 @@ export const cartCommand = {
       return false
     }
   },
-
   delete: async (cartId) => {
     try {
       const config = authorization()

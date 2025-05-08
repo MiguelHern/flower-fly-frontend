@@ -101,9 +101,9 @@
               </div>
 
               <ButtonBase
-                class="w-full mt-4 py-2 rounded-md font-medium transition-colors duration-200 flex items-center justify-center gap-2 border border-pink-200"
+                class="w-full mt-4 py-2 rounded-md font-medium transition-colors duration-200 flex items-center justify-center gap-2"
                 @click="addToCart(flower)"
-                variant="outline"
+                variant="secondary"
                 :disabled="getFlowerQuantity(flower.id) === 0"
                 :class="{'opacity-50 cursor-not-allowed': getFlowerQuantity(flower.id) === 0}"
               >

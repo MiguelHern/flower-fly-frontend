@@ -1,11 +1,12 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { bouquetQueries } from '@/api/bouquet/bouquetQueries'
-import { Search, ChevronLeft, ChevronRight, Loader2, EyeIcon } from 'lucide-vue-next'
+import { bouquetQueries } from '@/api/bouquet/bouquetQueries.js'
+import { Search, ChevronLeft, ChevronRight, Loader2, EyeIcon, Pencil, Trash } from 'lucide-vue-next'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-import FlowerForm from '@/features/admin/components/FlowerForm.vue'
+import FlowerForm from '@/features/admin/components/inventory/FlowerForm.vue'
 import Button from '@/components/ui/ButtonBase.vue'
-import BouquetForm from '@/features/admin/components/BouquetForm.vue'
+import BouquetForm from '@/features/admin/components/inventory/BouquetForm.vue'
+import { bouquetCommand } from '@/api/bouquet/bouquetCommand.js'
 
 const bouquets = ref([])
 const loading = ref(true)
@@ -125,13 +126,32 @@ function handleFlorCreada() {
   showCrearFlor.value = false
   fetchBouquets()
 }
+
+const deleteBouquet = async (bouquetId) => {
+  const response = await bouquetCommand.deleteBouquets(bouquetId)
+  showNotifications.value = true
+
+  if (response !== null) {
+    toastType.value = 'error'
+    messages.value = response
+  } else {
+    toastType.value = 'success'
+    await fetchFlowers()
+    messages.value = 'success'
+  }
+
+  setTimeout(() => {
+    showNotifications.value = false
+    messages.value = ''
+  }, 3000)
+}
 </script>
 
 <template>
   <div class="p-4">
     <div class="flex justify-between">
       <h2 class="text-xl font-semibold mb-4">Catálogo de Flores</h2>
-      <Button @click="showCrearFlor = true"> Agregar producto </Button>
+      <Button variant="secondary" @click="showCrearFlor = true"> Agregar producto </Button>
     </div>
     <BouquetForm
       v-if="showCrearFlor"
@@ -239,14 +259,15 @@ function handleFlorCreada() {
                   {{ bouquet.stock > 0 ? bouquet.stock : 'Agotado' }}
                 </span>
             </td>
-            <td class="py-3 px-4">
-              <button
-                @click="viewBouquetDetails(bouquet.id)"
-                class="p-1.5 text-blue-600 hover:bg-blue-50 rounded"
-                title="Ver detalles"
-              >
-                <EyeIcon class="w-5 h-5" />
-              </button>
+            <td class="py-3 px-4 space-x-4">
+              <div
+                @click="() => deleteBouquet(bouquet.id)"
+                class="rounded-full border inline-block p-1">
+                <Trash size="16" />
+              </div>
+              <div class="rounded-full border inline-block p-1">
+                <Pencil size="16" />
+              </div>
             </td>
           </tr>
         </template>

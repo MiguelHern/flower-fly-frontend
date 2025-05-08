@@ -1,5 +1,5 @@
 <script setup>
-import OrderCard from '../components/orders/CardOrders.vue';
+import OrderCard from '../components/CardOrder.vue';
 import { onMounted, ref } from 'vue'
 import { ordersQueries } from '@/api/orders/ordersQueries.js'
 
@@ -40,10 +40,10 @@ onMounted(() => {
 <template>
   <div class="p-4">
     <OrderCard v-for="order in orders" :key="order.id" :order="order"
-               :id="order.salesId"
-               :status="order.status"
-               :purchaseDate="13/12/2002"
-               :total="order.total"
+      :id="order.salesId"
+      :status="order.status"
+      :purchaseDate="13/12/2002"
+      :total="order.total"
     />
   </div>
 </template>

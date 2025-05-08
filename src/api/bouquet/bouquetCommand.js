@@ -1,4 +1,4 @@
-import { apiUrl, authorizationFormData } from '@/api/headers.js'
+import { apiUrl, authorization, authorizationFormData } from '@/api/headers.js'
 import axios from 'axios'
 
 export const bouquetCommand = {
@@ -70,5 +70,23 @@ export const bouquetCommand = {
         return error.response.data.title
       }
     }
-  }
+  },
+
+  deleteBouquets: async (flowerId) => {
+    try {
+      const config = authorization()
+
+      await axios.delete(`${apiUrl}/Bouquet/${flowerId}`, config)
+
+      return null
+    } catch (error) {
+      if (error.response?.status === 400) {
+        return error.response.data.title
+      } else if (error.response?.status === 404) {
+        return 'Corrige perro'
+      } else {
+        return 'Error inesperado'
+      }
+    }
+  },
 }

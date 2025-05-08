@@ -39,6 +39,7 @@ const router = createRouter({
       path: '/',
       name: 'user',
       component: UserLayout,
+      meta: { requiresRole: 'USER' },
       redirect: { name: 'products' },
       children: [
         {
@@ -73,6 +74,17 @@ const router = createRouter({
           name: 'cart',
           component: () => import('../features/cart/views/CartView.vue'),
         },
+        {
+          path: '/orders',
+          name: 'orders',
+          component: () => import('../features/sales/views/OrdersView.vue'),
+        },
+        {
+          path: '/orders/:id',
+          name: 'order-detail',
+          component: () => import('../features/sales/views/OrderDetailView.vue'),
+          props: true,
+        },
       ],
     },
     {
@@ -80,11 +92,18 @@ const router = createRouter({
       name: 'admin',
       component: AdminLayout,
       meta: { requiresRole: 'ADMIN' },
+      redirect: { name: 'inventory' },
       children: [
         {
           path: '/inventory',
           name: 'inventory',
           component: InventoryView,
+          meta: { requiresRole: 'ADMIN' }
+        },
+        {
+          path: '/orders',
+          name: 'orders',
+          component: () => import('../features/admin/views/OrdersView.vue'),
           meta: { requiresRole: 'ADMIN' }
         },
         {
@@ -137,7 +156,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // Cambiar el título
-  document.title = to.meta.title || 'Fisiolabs'
+  document.title = to.meta.title || 'Flower Fly'
 
   return next()
 })

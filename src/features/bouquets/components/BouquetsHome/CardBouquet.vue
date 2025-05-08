@@ -48,8 +48,8 @@
       <!-- Botón siempre al fondo -->
       <Button
         @click="() => addToCart(props)"
-        class="w-full py-2 rounded-md font-medium transition-colors duration-200 flex items-center justify-center gap-2 border border-pink-200 mt-auto"
-        variant="outline"
+        class="w-full py-2 rounded-md font-medium transition-colors duration-200 flex items-center justify-center gap-2 0 mt-auto"
+        variant="secondary"
       >
         <ShoppingBag class="h-4 w-4" />
         Añadir al carrito

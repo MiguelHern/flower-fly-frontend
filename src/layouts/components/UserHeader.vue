@@ -1,9 +1,10 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-import {  ShoppingCart, Heart, User } from 'lucide-vue-next'
-import Button from '@/components/ui/ButtonBase.vue'
-import { logOut } from '@/router/Utils.js'
+import {  ShoppingCart, Box, User } from 'lucide-vue-next'
+import LogOutButton from '@/components/common/LogOutButton.vue'
+
+
 </script>
 
 <template>
@@ -17,7 +18,7 @@ import { logOut } from '@/router/Utils.js'
             Flower Fly
           </h1>
         </RouterLink>
-        <ul class="flex **:space-x-2 gap-1">
+        <ul class="flex **:space-x-2 gap-1 items-center">
           <li>
             <RouterLink
               to="/"
@@ -25,15 +26,6 @@ import { logOut } from '@/router/Utils.js'
             >
               <User />
               <span class="flex-1 whitespace-nowrap">Mi cuenta</span>
-            </RouterLink>
-          </li>
-          <li>
-            <RouterLink
-              to="/"
-              class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
-              <Heart />
-              <span class="flex-1 whitespace-nowrap">Favoritos</span>
             </RouterLink>
           </li>
           <li>
@@ -46,15 +38,16 @@ import { logOut } from '@/router/Utils.js'
             </RouterLink>
           </li>
           <li>
-            <Button
-              @click="logOut()"
-              data-tooltip-target="Sesion"
-              variant="outline"
-              to="/cart"
+            <RouterLink
+              to="/orders"
               class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             >
-              <span class="flex-1 whitespace-nowrap">Cerrar sesión</span>
-            </Button>
+              <Box />
+              <span class="flex-1 whitespace-nowrap">Pedidos</span>
+            </RouterLink>
+          </li>
+          <li>
+            <LogOutButton/>
           </li>
         </ul>
       </div>

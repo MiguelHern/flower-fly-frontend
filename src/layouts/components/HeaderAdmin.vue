@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import {  ShoppingCart, Heart, User } from 'lucide-vue-next'
+import LogOutButton from '@/components/common/LogOutButton.vue'
 </script>
 
 <template>
@@ -17,27 +17,29 @@ import {  ShoppingCart, Heart, User } from 'lucide-vue-next'
         <ul class="flex **:space-x-2 gap-1">
           <li>
             <RouterLink
-              to="/"
+              to="/inventory"
               class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             >
               <span class="flex-1 whitespace-nowrap">Inventario</span>
             </RouterLink>
           </li>
           <li>
-            <RouterLink
-              to="/"
+            <div
               class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             >
               <span class="flex-1 whitespace-nowrap">Ajustes</span>
-            </RouterLink>
+          </div>
           </li>
           <li>
             <RouterLink
-              to="/"
+              to="/orders"
               class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             >
               <span class="flex-1 whitespace-nowrap">Pedidos</span>
             </RouterLink>
+          </li>
+          <li>
+            <LogOutButton/>
           </li>
         </ul>
       </div>

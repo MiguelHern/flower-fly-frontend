@@ -2,7 +2,7 @@ import router from '@/router/index.js'
 
 export const logOut = () => {
   localStorage.clear()
-  router.push({ name: 'login' })
+  router.push('/')
 }
 
 

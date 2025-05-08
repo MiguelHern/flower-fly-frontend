@@ -62,7 +62,7 @@
           <ButtonBase class="w-full text-white bg-pink-600 hover:bg-pink-700">
             Agregar al carrito
           </ButtonBase>
-          <ButtonBase @click="createBouquet" class="" variant="outline"> Guardar ramo </ButtonBase>
+          <ButtonBase @click="createBouquet" class="" variant="white"> Guardar ramo </ButtonBase>
         </div>
       </div>
 

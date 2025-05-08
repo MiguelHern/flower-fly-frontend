@@ -140,15 +140,14 @@
             class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             :disabled="isSubmitting"
           >
-      <span v-if="isSubmitting" class="flex items-center">
-        <LoaderIcon class="animate-spin -ml-1 mr-2 h-4 w-4" />
-        Guardando...
-      </span>
+            <span v-if="isSubmitting" class="flex items-center">
+              <LoaderIcon class="animate-spin -ml-1 mr-2 h-4 w-4" />
+              Guardando...
+            </span>
             <span v-else>Guardar</span>
           </button>
         </div>
       </form>
-
     </div>
   </ModalUi>
   <ToastMessage v-if="toastValue" type="success">
@@ -167,8 +166,8 @@ import ToastMessage from '@/components/ui/ToastMessage.vue'
 defineProps({
   modelValue: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
 
 const emit = defineEmits(['close', 'update:modelValue', 'submitted'])
@@ -193,15 +192,23 @@ const showToast = (message, type = 'info') => {
   }, 3000)
 }
 
-const flowerTypes = ['Rosa', 'Tulipán', 'Girasol', 'Lirio', 'Margarita', 'Clavel', 'Orquídea', 'Dalia']
-const flowerColors = ['Amarillo', 'Rosa','Rojo', 'Blanco', ]
+const flowerTypes = [
+  'Rosa',
+  'Tulipán',
+  'Girasol',
+  'Lirio',
+  'Margarita',
+  'Clavel',
+  'Orquídea',
+  'Dalia',
+]
+const flowerColors = ['Amarillo', 'Rosa', 'Rojo', 'Blanco']
 const seasons = [
   { id: 1, label: 'Primavera' },
   { id: 2, label: 'Verano' },
   { id: 3, label: 'Otoño' },
-  { id: 4, label: 'Invierno' }
+  { id: 4, label: 'Invierno' },
 ]
-
 
 const schema = yup.object().shape({
   name: yup.string().required('El nombre es obligatorio'),
@@ -210,7 +217,7 @@ const schema = yup.object().shape({
   type: yup.string().required('El tipo es obligatorio'),
   color: yup.string().required('El color es obligatorio'),
   season: yup.array().min(1, 'Seleccione al menos una temporada'),
-  image: yup.mixed().required('La imagen es obligatoria')
+  image: yup.mixed().required('La imagen es obligatoria'),
 })
 
 const form = reactive({
@@ -219,7 +226,7 @@ const form = reactive({
   stock: 0,
   type: '',
   color: '',
-  season: [] // Corregido
+  season: [], // Corregido
 })
 
 const errors = reactive({
@@ -229,7 +236,7 @@ const errors = reactive({
   type: '',
   color: '',
   season: '',
-  image: ''
+  image: '',
 })
 
 const handleImageChange = (event) => {
@@ -267,29 +274,32 @@ const closeModal = () => {
 }
 
 const resetForm = () => {
-  Object.keys(form).forEach(key => {
+  Object.keys(form).forEach((key) => {
     form[key] = key === 'stock' ? 0 : key === 'season' ? [] : ''
   })
   removeImage()
-  Object.keys(errors).forEach(key => {
+  Object.keys(errors).forEach((key) => {
     errors[key] = ''
   })
 }
 
 const validateForm = async () => {
   try {
-    await schema.validate({
-      ...form,
-      image: imageFile.value
-    }, { abortEarly: false })
+    await schema.validate(
+      {
+        ...form,
+        image: imageFile.value,
+      },
+      { abortEarly: false },
+    )
 
-    Object.keys(errors).forEach(key => {
+    Object.keys(errors).forEach((key) => {
       errors[key] = ''
     })
 
     return true
   } catch (validationErrors) {
-    validationErrors.inner.forEach(error => {
+    validationErrors.inner.forEach((error) => {
       errors[error.path] = error.message
     })
 
@@ -312,10 +322,10 @@ const handleSubmit = async () => {
       form.type,
       form.color,
       form.season,
-      form.stock
+      form.stock,
     )
 
-    if (result !==null) {
+    if (result !== null) {
       showToast(result, 'error')
     } else {
       showToast('Flor creada con éxito', 'success')
@@ -333,4 +343,3 @@ const handleSubmit = async () => {
   }
 }
 </script>
-

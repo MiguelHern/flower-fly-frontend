@@ -1,10 +1,10 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { bouquetQueries } from '@/api/bouquet/bouquetQueries'
+import { bouquetQueries } from '@/api/bouquet/bouquetQueries.js'
 import { Search, ChevronLeft, ChevronRight, Loader2, Pencil, Trash } from 'lucide-vue-next'
 import { Menu, MenuButton, MenuItems } from '@headlessui/vue'
 import Button from '@/components/ui/ButtonBase.vue'
-import FlowerForm from '@/features/admin/components/FlowerForm.vue'
+import FlowerForm from '@/features/admin/components/inventory/FlowerForm.vue'
 import ToastMessage from '@/components/ui/ToastMessage.vue'
 
 const flowers = ref([])

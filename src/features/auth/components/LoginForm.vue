@@ -32,7 +32,7 @@ const login = async () =>{
         <div class="flex items-center justify-center mb-2">
           <Flower2 class="h-10 w-10 text-pink-500" />
         </div>
-        <h1 class="text-3xl text-center font-bold text-pink-700">Florería Flower Fly</h1>
+        <h1 class="text-3xl text-center font-bold text-pink-700">Flower Fly</h1>
         <h3 class="text-center text-gray-500">Ingresa a tu cuenta para realizar pedidos</h3>
       </div>
       <form @submit.prevent="login()" class="space-y-4">

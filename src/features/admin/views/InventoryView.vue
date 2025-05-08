@@ -46,10 +46,10 @@
 
 <script setup>
 import { ref } from 'vue'
-import FlowerTable from '../components/FlowerProductTable.vue'
-import BouquetTable from '../components/BouquetProductTable.vue'
+import FlowerTable from '../components/inventory/FlowerProductTable.vue'
+import BouquetTable from '../components/inventory/BouquetProductTable.vue'
 import { Flower, Gift, ShoppingBag } from 'lucide-vue-next'
-import FlowerForm from '@/features/admin/components/FlowerForm.vue'
+import FlowerForm from '@/features/admin/components/inventory/FlowerForm.vue'
 
 const activeTab = ref('flowers')
 
