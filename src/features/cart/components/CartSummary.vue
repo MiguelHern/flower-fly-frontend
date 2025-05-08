@@ -79,7 +79,7 @@
       <div class="mt-6 pt-6 border-t border-pink-200">
         <div class="flex items-center gap-2 text-sm text-gray-600">
           <TruckIcon class="h-4 w-4" />
-          <span>Envío gratuito en pedidos +$500</span>
+          <span>Envíos</span>
         </div>
         <div class="flex items-center gap-2 text-sm text-gray-600 mt-2">
           <CalendarIcon class="h-4 w-4" />
