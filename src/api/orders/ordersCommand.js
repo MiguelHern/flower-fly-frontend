@@ -1,4 +1,4 @@
-import { apiUrl, authorizationJSON } from '@/api/headers.js'
+import { apiUrl, authorization, authorizationFormData, authorizationJSON } from '@/api/headers.js'
 import axios from 'axios'
 
 export const ordersCommand = {
@@ -11,6 +11,22 @@ export const ordersCommand = {
     } catch (error) {
       console.log(error)
       return false
+    }
+  },
+
+  pay: async () => {
+    try {
+      const json = {}
+
+      const [data, config] = authorizationJSON(json)
+      await axios.post(`${apiUrl}/ShoppingCar/Pay`, data, config)
+      return "Creado con exito"
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return error.response.data.title
+      } else {
+        return 'Error al pagar'
+      }
     }
   },
 }

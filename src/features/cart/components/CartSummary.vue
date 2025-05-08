@@ -104,6 +104,7 @@ import ToastMessage from '@/components/ui/ToastMessage.vue'
 import BouquetForm from '@/features/admin/components/inventory/BouquetForm.vue'
 import PaymentForm from '@/features/sales/components/PaymentForm.vue'
 import { cartCommand } from '@/api/cart/cartCommand.js'
+import { ordersCommand } from '@/api/orders/ordersCommand.js'
 
 const showCrearFlor = ref(false)
 const paymentMethodAdded = ref(false)
@@ -145,7 +146,9 @@ const addFromStore = async () => {
     const result = await cartCommand.addBulked(items)
 
     if (result === null) {
-      messageStatus.value = 'Productos agregados correctamente al carrito.'
+      await payCart()
+      deleteStorage()
+      messageStatus.value = 'Orden creada con éxito'
       toastType.value = 'success'
     } else {
       messageStatus.value = result
@@ -160,28 +163,18 @@ const addFromStore = async () => {
     messageStatus.value = 'Error inesperado'
     toastType.value = 'error'
     showNotification.value = true
-    console.error(error)
   }
 }
 
-
+const deleteStorage = () => {
+  localStorage.removeItem('selectedItems')
+}
 
 const payCart = async () => {
   try {
-    await cartCommand.payCart()
+    await ordersCommand.pay()
   } catch (error) {
     console.log(error)
-  }
-}
-const payBulked = async () => {
-  try {
-    await addFromStore(selectedItems.value)
-
-    await payCart()
-
-    selectedItems.value = []
-  } catch (error) {
-    console.error('Error al procesar el pago:', error)
   }
 }
 </script>

@@ -66,9 +66,4 @@ export const cartCommand = {
       }
     }
   },
-
-  payCart: async () => {
-    const [data, config] = authorization()
-    await axios.post(`${apiUrl}/ShoppingCar/pay`, data, config)
-  }
 }
