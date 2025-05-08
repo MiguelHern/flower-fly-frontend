@@ -139,7 +139,7 @@ const removeFlower = (flowerId) => {
 const addFromStore = async () => {
   try {
     const items = selectedItems.value.map(item => ({
-      itemId: item.id,
+      bouquetId: item.id,
       quantity: item.quantity
     }))
     const result = await cartCommand.addBulked(items)
