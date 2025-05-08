@@ -82,7 +82,7 @@ export const bouquetCommand = {
       if (error.response?.status === 400) {
         return error.response.data.title
       } else if (error.response?.status === 404) {
-        return 'Corrige perro'
+        return 'Error inesperado'
       } else {
         return 'Error inesperado'
       }

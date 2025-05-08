@@ -52,17 +52,17 @@
         </div>
 
         <div class="flex flex-col gap-3 mt-6">
-          <!--          <ButtonBase-->
-          <!--            @click="payBulked"-->
-          <!--            class="w-full text-white"-->
-          <!--            :class="paymentMethodAdded ? 'bg-pink-600 hover:bg-pink-700' : 'bg-gray-400 cursor-not-allowed'"-->
-          <!--            :disabled="!paymentMethodAdded"-->
-          <!--          >-->
-          <!--            Ordenar-->
-          <!--          </ButtonBase>-->
-          <ButtonBase @click="addFromStore" class="w-full text-white bg-pink-600 hover:bg-pink-700">
-            Ordenar
-          </ButtonBase>
+                    <ButtonBase
+                      @click="addFromStore"
+                      class="w-full text-white"
+                      :class="paymentMethodAdded ? 'bg-pink-600 hover:bg-pink-700' : 'bg-gray-400 cursor-not-allowed'"
+                      :disabled="!paymentMethodAdded"
+                    >
+                      Ordenar
+                    </ButtonBase>
+<!--          <ButtonBase @click="addFromStore" class="w-full text-white bg-pink-600 hover:bg-pink-700">-->
+<!--            Ordenar-->
+<!--          </ButtonBase>-->
           <ButtonBase @click="showCrearFlor = true" class="" variant="secondary">
             Agregar método de pago
           </ButtonBase>
