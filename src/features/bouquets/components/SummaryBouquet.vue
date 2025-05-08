@@ -165,7 +165,7 @@ const createBouquet = async () => {
 
   try {
     const price = totalPrice.value
-    const stock = 1
+    const stock = 50
     const isCustomizable = true
     const flowers = selectedFlowers.value
     const name = bouquet_name.value
