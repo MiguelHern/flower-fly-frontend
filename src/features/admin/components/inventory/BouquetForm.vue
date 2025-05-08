@@ -273,14 +273,15 @@ const handleSubmit = async () => {
       imageFile.value
     )
 
-    console.log(result)
-    if (result !== null && typeof result === 'string') {
-      showToast(result, 'error')
-    } else {
+    if(result == "Creado con exito"){
       showToast('Ramo creado con éxito', 'success')
       emit('submitted', result)
       resetForm()
       emit('close')
+    }
+
+    if (result !== null && typeof result === 'string') {
+      showToast(result, 'error')
     }
   } catch (error) {
     showToast('Error al crear el ramo', 'error')

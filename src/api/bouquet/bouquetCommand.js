@@ -20,8 +20,8 @@ export const bouquetCommand = {
 
       const [data, config] = authorizationFormData(formData)
 
-      const response = await axios.post(apiUrl + '/Bouquet', data, config)
-      return response.data
+      await axios.post(apiUrl + '/Bouquet', data, config)
+      return "Creado con exito"
     } catch (error) {
       if (error.response && error.response.status === 400) {
         return error.response.data.title
