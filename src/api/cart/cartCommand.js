@@ -6,7 +6,7 @@ export const cartCommand = {
     try {
       const JSON = {
         bouquetId: bouquetId,
-        quantity: quantity
+        quantity: quantity,
       }
 
       const [data, config] = authorizationJSON(JSON)
@@ -49,7 +49,26 @@ export const cartCommand = {
         return 'Error inesperado'
       }
     }
+  },
+  addBulked: async (items) => {
+    try {
+      const JSON = { add: items }
+      const [data, config] = authorizationJSON(JSON)
+      await axios.patch(apiUrl + '/ShoppingCar', data, config)
+      return null
+    } catch (error) {
+      if (error.response?.status === 400) {
+        return error.response.data.title
+      } else if (error.response?.status === 404) {
+        return 'Corrige perro'
+      } else {
+        return 'Error inesperado'
+      }
+    }
+  },
+
+  payCart: async () => {
+    const [data, config] = authorization()
+    await axios.post(`${apiUrl}/ShoppingCar/pay`, data, config)
   }
-
-
 }

@@ -21,7 +21,7 @@ import { Flower2 } from 'lucide-vue-next'
           déjanos ayudarte a expresar tus sentimientos de la manera más hermosa. Cada flor cuenta una historia, ¿cuál
           será la tuya?
         </p>
-        <RouterLink to="">
+        <RouterLink to="/custom-bouquets">
           <ButtonBase class="">
             Personalizar
           </ButtonBase>

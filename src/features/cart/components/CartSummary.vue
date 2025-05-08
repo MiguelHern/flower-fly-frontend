@@ -52,10 +52,20 @@
         </div>
 
         <div class="flex flex-col gap-3 mt-6">
-          <ButtonBase class="w-full text-white bg-pink-600 hover:bg-pink-700">
+          <!--          <ButtonBase-->
+          <!--            @click="payBulked"-->
+          <!--            class="w-full text-white"-->
+          <!--            :class="paymentMethodAdded ? 'bg-pink-600 hover:bg-pink-700' : 'bg-gray-400 cursor-not-allowed'"-->
+          <!--            :disabled="!paymentMethodAdded"-->
+          <!--          >-->
+          <!--            Ordenar-->
+          <!--          </ButtonBase>-->
+          <ButtonBase @click="addFromStore" class="w-full text-white bg-pink-600 hover:bg-pink-700">
             Ordenar
           </ButtonBase>
-          <ButtonBase @click="showCrearFlor = true" class="" variant="secondary"> Agregar método de pago </ButtonBase>
+          <ButtonBase @click="showCrearFlor = true" class="" variant="secondary">
+            Agregar método de pago
+          </ButtonBase>
         </div>
         <PaymentForm
           v-if="showCrearFlor"
@@ -93,11 +103,14 @@ import { useCartStore } from '@/features/cart/stores/cartStore.js'
 import ToastMessage from '@/components/ui/ToastMessage.vue'
 import BouquetForm from '@/features/admin/components/inventory/BouquetForm.vue'
 import PaymentForm from '@/features/sales/components/PaymentForm.vue'
+import { cartCommand } from '@/api/cart/cartCommand.js'
 
 const showCrearFlor = ref(false)
+const paymentMethodAdded = ref(false)
 
-function handleFlorCreada() {
+const handleFlorCreada = () => {
   showCrearFlor.value = false
+  paymentMethodAdded.value = true
 }
 
 // Estado del componente
@@ -123,4 +136,52 @@ const removeFlower = (flowerId) => {
   cartStore.removeSelectedItem(flowerId)
 }
 
+const addFromStore = async () => {
+  try {
+    const items = selectedItems.value.map(item => ({
+      itemId: item.id,
+      quantity: item.quantity
+    }))
+    const result = await cartCommand.addBulked(items)
+
+    if (result === null) {
+      messageStatus.value = 'Productos agregados correctamente al carrito.'
+      toastType.value = 'success'
+    } else {
+      messageStatus.value = result
+      toastType.value = 'error'
+    }
+
+    showNotification.value = true
+    setTimeout(() => {
+      showNotification.value = false
+    }, 3000)
+  } catch (error) {
+    messageStatus.value = 'Error inesperado'
+    toastType.value = 'error'
+    showNotification.value = true
+    console.error(error)
+  }
+}
+
+
+
+const payCart = async () => {
+  try {
+    await cartCommand.payCart()
+  } catch (error) {
+    console.log(error)
+  }
+}
+const payBulked = async () => {
+  try {
+    await addFromStore(selectedItems.value)
+
+    await payCart()
+
+    selectedItems.value = []
+  } catch (error) {
+    console.error('Error al procesar el pago:', error)
+  }
+}
 </script>

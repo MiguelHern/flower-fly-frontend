@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto px-4 py-8 max-w-4xl">
     <div class="flex w-full justify-between items-center mb-6">
-      <ButtonBase @click="()=> router.push({name:'orders'})" class="" variant="outline">
+      <ButtonBase @click="() => router.push({ name: 'orders-user' })" class="" variant="outline">
         <ArrowLeft class="h-4 w-4 mr-2" />
         Volver
       </ButtonBase>
@@ -26,7 +26,9 @@
         </div>
         <div>
           <p class="text-sm text-gray-500 mb-1">Estado</p>
-          <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-rose-100 text-rose-600 hover:bg-rose-200">
+          <div
+            class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-rose-100 text-rose-600 hover:bg-rose-200"
+          >
             Completado
           </div>
         </div>
@@ -47,7 +49,13 @@
       <ProductCard
         v-for="product in orders"
         :key="product.id"
-        :product="product"
+        :id="product.id"
+        :name="product.name"
+        :price="product.price"
+        :image="product.image"
+        :stock="product.stock"
+        :is-customizable="product.isCustomizable"
+        :quantity="product.quantity"
       />
     </div>
 
@@ -78,7 +86,9 @@
     </div>
 
     <div class="mt-8 flex justify-center">
-      <button class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shadow bg-rose-500 hover:bg-rose-600 text-white h-9 px-4 py-2">
+      <button
+        class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shadow bg-rose-500 hover:bg-rose-600 text-white h-9 px-4 py-2"
+      >
         <Package class="h-4 w-4 mr-2" />
         Ver Estado del Envío
       </button>
@@ -88,38 +98,46 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import {  Package, ArrowLeft } from 'lucide-vue-next'
+import { Package, ArrowLeft } from 'lucide-vue-next'
 import ProductCard from '../components/CardDetailOrder.vue'
 import ButtonBase from '@/components/ui/ButtonBase.vue'
-const orderNumber = ref(Math.floor(Math.random() * 10000).toString().padStart(4, '0'))
+const orderNumber = ref(
+  Math.floor(Math.random() * 10000)
+    .toString()
+    .padStart(4, '0'),
+)
 const orderDate = ref(new Date().toLocaleDateString())
 import router from '@/router'
+import { useRoute } from 'vue-router'
 import { ordersQueries } from '@/api/orders/ordersQueries.js'
 
 const orders = ref([])
 const loading = ref(true)
 const error = ref(false)
 
+const route = useRoute()
+const orderId = route.params.id
+
 const fetchOrderDetail = async () => {
   try {
     loading.value = true
     error.value = false
 
-    const apiParams = {
-      page: 1,
-      pageSize: 20,
-    }
+    const response = await ordersQueries.getOrderById(orderId)
 
-    const response = await ordersQueries.getOrderById(apiParams)
+    if (response) {
+      // Asegurarse de que los items sean un array válido
+      const items = Array.isArray(response) ? response : response.items || []
 
-    if (response && response.items) {
-      orders.value = response.items.map((orders) => ({
-        ...orders,
-        price: parseFloat(orders.price),
+      orders.value = items.map((item) => ({
+        ...item,
+        price: parseFloat(item.price || '0'),
+        isCustomizable: item.isCustomizable ?? false,
+        quantity: item.quantity ?? 1,
       }))
     }
   } catch (err) {
-    console.error('Error fetching bouquets:', err)
+    console.error('Error fetching order details:', err)
     error.value = true
   } finally {
     loading.value = false
@@ -129,54 +147,7 @@ onMounted(() => {
   fetchOrderDetail()
 })
 
-onMounted(() => {
-  // Normalmente aquí harías un fetch a tu API
-  const mockData = [
-    {
-      "id": "50aa643b-1c0a-4ad5-88cf-07c54558ffdb",
-      "name": "Ramo de Rosas Rojas",
-      "price": 869.00,
-      "image": null,
-      "stock": 0,
-      "isCustomizable": false,
-      "quantity": 1
-    },
-    {
-      "id": "292c5c93-70ca-438d-99b0-16fa0215653f",
-      "name": "Arreglo Floral Primavera",
-      "price": 243.00,
-      "image": null,
-      "stock": 0,
-      "isCustomizable": true,
-      "quantity": 2
-    },
-    {
-      "id": "6bcdc669-777e-49ba-8504-68b1ed3ed6e3",
-      "name": "Bouquet de Tulipanes",
-      "price": 869.00,
-      "image": null,
-      "stock": 0,
-      "isCustomizable": false,
-      "quantity": 1
-    },
-    {
-      "id": "10e77041-7cf5-45cb-8a43-6b71d3e463d2",
-      "name": "Centro de Mesa Elegante",
-      "price": 866.00,
-      "image": null,
-      "stock": 0,
-      "isCustomizable": false,
-      "quantity": 1
-    }
-  ]
-
-  setTimeout(() => {
-    orders.value = mockData
-    loading.value = false
-  }, 500)
-})
-
 const calculateTotal = () => {
-  return orders.value.reduce((total, product) => total + (product.price * product.quantity), 0)
+  return orders.value.reduce((total, product) => total + product.price * product.quantity, 0)
 }
 </script>

@@ -1,9 +1,8 @@
 <template>
-  <RouterLink
-    :to="{ name: 'order-detail', params: { id } }"
+  <div
     class="bg-white block rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
   >
-    <div class="flex">
+    <RouterLink :to="{ name: 'orderDetail', params: { id: id } }" class="flex">
       <div class="w-1.5 h-full" :class="statusColors[status].accent"></div>
       <div class="p-5 flex-1">
         <div class="flex justify-between items-start">
@@ -44,15 +43,19 @@
           <ChevronRight class="h-4 w-4" />
         </div>
       </div>
-    </div>
-  </RouterLink>
+    </RouterLink>
+    <ButtonBase @click="completeOrder" v-if="status===0"  class="w-full">
+      Finalizar Pedido
+    </ButtonBase>
+  </div>
 </template>
 
 <script setup>
 import { CheckCircle, Package, ChevronRight, Calendar, ShoppingBag, MapPin, Clock } from 'lucide-vue-next';
-import { RouterLink } from 'vue-router';
+import ButtonBase from '@/components/ui/ButtonBase.vue'
+import { ordersCommand } from '@/api/orders/ordersCommand.js'
 
-defineProps({
+const props = defineProps({
   id: { type: String, required: true },
   total: { type: Number, required: true },
   purchaseDate: { type: [Date, String], required: true },
@@ -104,11 +107,22 @@ const formatDate = (date, format = 'long') => {
 
   return new Intl.DateTimeFormat('es-ES', options).format(date);
 };
+
+const completeOrder = async () => {
+  try {
+    const response = await ordersCommand.edit(props.id)
+    if (response!== null) {
+      console.log(response)
+    } else {
+      console.log(response)
+    }
+  } catch (err) {
+    console.error('Error al cargar detalles de la orden:', err)
+  }
+}
+
+
 </script>
 
 <style scoped>
-/* Añade animación sutil al hover */
-.router-link-active {
-  border-color: rgba(var(--color-primary), 0.5);
-}
 </style>

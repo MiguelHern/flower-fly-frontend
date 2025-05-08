@@ -10,17 +10,17 @@ import { userQueries } from '@/api/user/userQueries.js'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: '/:pathMatch(.*)*',
-      name: 'not-found',
-      component: NotFound,
-      meta: { requiresAuth: false }
-    },
+    // {
+    //   path: '/:pathMatch(.*)*',
+    //   name: 'not-found',
+    //   component: NotFound,
+    //   meta: { requiresAuth: false },
+    // },
     {
       path: '/',
       name: 'auth',
       component: AuthLayout,
-      meta: { verifyToken: false},
+      meta: { verifyToken: false },
       redirect: { name: 'login' },
       children: [
         {
@@ -75,8 +75,8 @@ const router = createRouter({
           component: () => import('../features/cart/views/CartView.vue'),
         },
         {
-          path: '/orders',
-          name: 'orders',
+          path: '/orders-user',
+          name: 'orders-user',
           component: () => import('../features/sales/views/OrdersView.vue'),
         },
         {
@@ -91,27 +91,30 @@ const router = createRouter({
       path: '/',
       name: 'admin',
       component: AdminLayout,
-      meta: { requiresRole: 'ADMIN' },
       redirect: { name: 'inventory' },
+      meta: { requiresRole: 'ADMIN' },
       children: [
         {
           path: '/inventory',
           name: 'inventory',
           component: InventoryView,
-          meta: { requiresRole: 'ADMIN' }
         },
         {
           path: '/orders',
           name: 'orders',
           component: () => import('../features/admin/views/OrdersView.vue'),
-          meta: { requiresRole: 'ADMIN' }
+        },
+        {
+          path: '/orders/:id',
+          name: 'orderDetail',
+          component: () => import('../features/admin/views/OrderDetailsView.vue'),
+          props: true,
         },
         {
           path: '/settings',
           name: 'settings',
           component: SettingsView,
-          meta: { requiresRole: 'ADMIN' }
-        }
+        },
       ],
     },
     // {

@@ -7,10 +7,10 @@
           <Flower2 class="h-5 w-5 text-stone-700" />
         </div>
         <div>
-          <h2 class="font-serif text-2xl mb-2">Elige entre nuestros ramos mas comprados</h2>
-          <p class="text-muted-foreground text-sm">
-            Elige entre nuestros ramos y los creados por ti!
-          </p>
+          <h2 class="font-serif text-2xl mb-2">Descubre nuestros ramos más populares</h2>
+            <p class="text-muted-foreground text-sm">
+              Elige entre nuestros ramos más vendidos y favoritos.
+            </p>
         </div>
       </div>
     </div>

@@ -21,7 +21,6 @@ export const bouquetCommand = {
       const [data, config] = authorizationFormData(formData)
 
       const response = await axios.post(apiUrl + '/Bouquet', data, config)
-      console.log(response.data)
       return response.data
     } catch (error) {
       if (error.response && error.response.status === 400) {

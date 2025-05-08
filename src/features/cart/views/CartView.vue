@@ -1,8 +1,7 @@
 <template>
   <div class="container mx-auto px-4 py-8">
     <div class="mb-8">
-      <h1 class="font-serif text-3xl md:text-4xl text-gray-800 mb-2">Crea tu ramo personalizado</h1>
-      <p class="text-gray-600">Selecciona las flores que más te gusten para tu arreglo perfecto</p>
+      <h1 class="font-serif text-3xl md:text-4xl text-gray-800 mb-2">Paga tus productos</h1>
     </div>
 
     <div class="w-full grid grid-cols-1 lg:grid-cols-4 gap-8">
