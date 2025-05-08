@@ -167,7 +167,7 @@ const addFromStore = async () => {
 }
 
 const deleteStorage = () => {
-  localStorage.removeItem('selectedItems')
+  cartStore.clearSelectedItems() // Limpiar el carrito en el store y en el LSC
 }
 
 const payCart = async () => {
