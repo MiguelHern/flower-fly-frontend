@@ -48,35 +48,35 @@
       </div>
 
       <!-- Detalles de envío y pago -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 border-b border-gray-200">
-        <div>
-          <h2 class="text-lg font-semibold mb-3">Información de envío</h2>
-          <div class="bg-gray-50 rounded-lg p-4">
-            <div v-if="order.shippingAddress" class="flex items-start gap-3">
-              <MapPin class="h-5 w-5 text-gray-500 mt-0.5" />
-              <div>
-                <p class="font-medium">Dirección de envío</p>
-                <p class="text-gray-600">{{ order.shippingAddress }}</p>
-              </div>
-            </div>
-            <div v-else class="text-gray-500 italic">No hay información de envío disponible</div>
-          </div>
-        </div>
+<!--      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 border-b border-gray-200">-->
+<!--        <div>-->
+<!--          <h2 class="text-lg font-semibold mb-3">Información de envío</h2>-->
+<!--          <div class="bg-gray-50 rounded-lg p-4">-->
+<!--            <div v-if="order.shippingAddress" class="flex items-start gap-3">-->
+<!--              <MapPin class="h-5 w-5 text-gray-500 mt-0.5" />-->
+<!--              <div>-->
+<!--                <p class="font-medium">Dirección de envío</p>-->
+<!--                <p class="text-gray-600">{{ order.shippingAddress }}</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div v-else class="text-gray-500 italic">No hay información de envío disponible</div>-->
+<!--          </div>-->
+<!--        </div>-->
 
-        <div>
-          <h2 class="text-lg font-semibold mb-3">Información de pago</h2>
-          <div class="bg-gray-50 rounded-lg p-4">
-            <div v-if="order.paymentMethod" class="flex items-start gap-3">
-              <CreditCard class="h-5 w-5 text-gray-500 mt-0.5" />
-              <div>
-                <p class="font-medium">Método de pago</p>
-                <p class="text-gray-600">{{ order.paymentMethod }}</p>
-              </div>
-            </div>
-            <div v-else class="text-gray-500 italic">No hay información de pago disponible</div>
-          </div>
-        </div>
-      </div>
+<!--        <div>-->
+<!--          <h2 class="text-lg font-semibold mb-3">Información de pago</h2>-->
+<!--          <div class="bg-gray-50 rounded-lg p-4">-->
+<!--            <div v-if="order.paymentMethod" class="flex items-start gap-3">-->
+<!--              <CreditCard class="h-5 w-5 text-gray-500 mt-0.5" />-->
+<!--              <div>-->
+<!--                <p class="font-medium">Método de pago</p>-->
+<!--                <p class="text-gray-600">{{ order.paymentMethod }}</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div v-else class="text-gray-500 italic">No hay información de pago disponible</div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
 
       <!-- Lista de productos -->
       <div class="p-6">
@@ -194,7 +194,7 @@ const loadOrderDetails = async () => {
     if (response) {
       // Asegurarse de que los items sean un array válido
       const items = Array.isArray(response) ? response : (response.items || [])
-      
+
       order.value = response
       orderItems.value = items.map((item) => ({
         id: item.id,
